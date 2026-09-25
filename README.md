@@ -95,10 +95,17 @@ Main training script. It:
 - loads the tokenizer
 - reads the corpus
 - initializes the model
-- builds the dataset and data loader
-- runs the training loop
-- computes the loss
-- saves the checkpoint to `checkpoints/healthcare_slm.pt`
+- splits the dataset into training and validation subsets
+- builds separate training and validation data loaders
+- runs the training loop and reports training loss
+- evaluates validation loss after each epoch through `validate()`
+- saves the lowest-validation-loss model to `checkpoints/best_healthcare_slm.pt`
+- saves the final epoch model to `checkpoints/healthcare_slm.pt`
+
+The progress-bar loss is the current training-batch loss. The epoch summary
+also reports the average training loss, validation loss, and best validation
+loss seen so far. The best checkpoint is selected using validation loss, not
+the last training batch loss.
 
 ### [src/generate.py](src/generate.py)
 
